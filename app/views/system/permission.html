@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="col-xs-5">
+        <form name="formPermission">
+            <div class="panel panel-default" style="margin:5px">
+                <div class="panel-heading">
+                    Permission
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label for="value" class="control-label">Value</label>
+                            </div>
+                            <div class="col-sm-8" ng-class="{error: formPermission.value.$invalid}">
+                                <input name="value" type="text" class="form-control" id="value" ng-model="currentPermission.value" required/>
+                                <span style="float:right; color:white" class="help-block label label-danger" ng-show="formPermission.value.$error.required">
+                                    Value is Required
+                                </span>
+                                <span style="float:right; color:white" class="help-block label label-danger" ng-show="valueExist">
+                                    Value already exist
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label for="label" class="control-label">Label</label>
+                            </div>
+                            <div class="col-sm-8" ng-class="{error: formPermission.label.$invalid}">
+                                <input name="label" type="text" class="form-control" id="label" ng-model="currentPermission.label" required/>
+                                <span style="float:right; color:white" class="help-block label label-danger" ng-show="formPermission.label.$error.required">
+                                    Label is Required
+                                </span>
+                                <span style="float:right; color:white" class="help-block label label-danger" ng-show="labelExist">
+                                    Label already exist
+                                </span>
+                            </div>
+                        </div>
+                        <div align="right">
+                            <button class="btn btn-primary" ng-click="save()" ng-disabled="isClean() || formPermission.$invalid">Save</button>
+                            <button class="btn btn-default" ng-click="clear()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-xs-7">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Value
+                    </th>
+                    <th>
+                        Label
+                    </th>
+                    <th class="col-xs-1">
+                        <button type="button" class="btn-right btn btn-default btn-sm btn-block" ng-click="clear()">
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                        </button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="x in permissions">
+                    <td>{{x.value}}</td>
+                    <td>{{x.label}}</td>
+                    <td class="col-xs-1">
+                        <a class="glyphicon glyphicon-edit" ng-click="edit(x)"></a>
+                        <a class="glyphicon glyphicon-remove" ng-click="delete(x)"></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div align="center">
+            <pagination total-items="paging.totalItems" ng-model="paging.currentPage" 
+                        items-per-page="paging.maxSize" max-size="10" class="pagination-sm" 
+                        boundary-links="true" ng-change="reloadData()" 
+                        previous-text="&lsaquo;" next-text="&rsaquo;" 
+                        first-text="&laquo;" last-text="&raquo;">
+            </pagination>
+
+            <pre>Page: {{paging.currentPage}} / {{paging.maxPage}}</pre>
+        </div>
+
+    </div>
+</div>
